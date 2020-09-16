@@ -4,7 +4,11 @@ using UnityEngine;
 
 public interface IRunner
 {
+    int runnerID{get; set;}
+    int lapNumber{get; set;}
+    int nextCheckPoint{get; set;}
+
     void CompleteLap();
 
-    void WrongDirection();
+    bool WrongDirection();
 }

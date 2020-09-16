@@ -5,26 +5,24 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float currentSpeed;
-    private Vector3 lastPosition;
     private Rigidbody playerRigidbody;
     private float inputVertical;
     private float inputHorizontal;
 
     private float maxVelocity = 10f;
 
-    public float movementForce;
-    private float forceBack;
+    public float movementForce = 100f;
+    public float rotationSpeed = 15f;
 
    private void Awake() {
        playerRigidbody = this.GetComponent<Rigidbody>();
-       lastPosition = this.transform.position;
-       forceBack = movementForce / 2f;
+       
    }
 
    private void Update() {
        inputVertical = Input.GetAxis("Vertical");
-       inputHorizontal = Input.GetAxis("Horizontal");
+       inputHorizontal = Input.GetAxisRaw("Horizontal");
+       
        if (Input.GetKeyDown(KeyCode.LeftShift))
        {
            maxVelocity /= 2f;
@@ -33,6 +31,7 @@ public class PlayerController : MonoBehaviour
        {
            maxVelocity *= 2f;
        }
+
    }
 
    private void FixedUpdate() {
@@ -50,6 +49,8 @@ public class PlayerController : MonoBehaviour
                playerRigidbody.AddForce(movementForce * -transform.forward);
            }
        }
+
+       transform.Rotate(transform.up * inputHorizontal * rotationSpeed);
    }
 
 
