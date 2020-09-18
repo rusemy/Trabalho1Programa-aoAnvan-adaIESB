@@ -78,8 +78,5 @@ public class GameManager : MonoBehaviour
         {
             powerUpPoints[5, i] = powerUpPoints5[i];
         }
-
     }
-
-    
 }
