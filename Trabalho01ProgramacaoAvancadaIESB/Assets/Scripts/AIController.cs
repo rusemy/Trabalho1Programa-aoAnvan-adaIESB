@@ -6,11 +6,12 @@ using UnityEngine.AI;
 
 public class AIController : MonoBehaviour, IRunner
 {
+    [SerializeField] private NavMeshAgent agent;
     public int runnerID{get; set;}
-    private NavMeshAgent agent;
-    private float lastDistance;
+    
     public int lapNumber {get; set;} = 0;
     public int nextCheckPoint{get; set;} = 0;
+    private float lastDistance;
 
     void Awake()
     {
@@ -33,8 +34,12 @@ public class AIController : MonoBehaviour, IRunner
     {
         nextCheckPoint = 0;
         GameManager.Instance.ranking[lapNumber, GameManager.Instance.numberOfPlayerThatCompletedLap[lapNumber]] = runnerID;
-        lapNumber++;
         GameManager.Instance.numberOfPlayerThatCompletedLap[lapNumber]++;
+        lapNumber++;
+        if (lapNumber > 2)
+        {
+            agent.speed = 0f;
+        }
     }
 
     public bool WrongDirection()

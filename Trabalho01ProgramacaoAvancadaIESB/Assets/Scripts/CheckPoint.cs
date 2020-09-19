@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    int checkPointID;
+    [SerializeField] private int checkPointID = 0;
     private void OnTriggerEnter(Collider other) {
         var runner = other.GetComponent<IRunner>();
         if(runner != null)

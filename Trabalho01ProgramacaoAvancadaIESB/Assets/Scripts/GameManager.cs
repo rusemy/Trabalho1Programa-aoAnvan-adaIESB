@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 /*
 -comtrolar as posiçoes dos corredores
 -contegem regressiva e aviso de inicio
@@ -9,16 +9,16 @@ using UnityEngine;
 */
 public class GameManager : MonoBehaviour
 {
-    
 
     private static GameManager instance = null;
-    public static GameManager Instance {
+    public static GameManager Instance
+    {
         get
         {
             if (instance == null)
             {
                 instance = FindObjectOfType<GameManager>();
-                if(instance == null)
+                if (instance == null)
                 {
                     GameObject managerGameObject = new GameObject("InputManager", typeof(GameManager));
                     instance = managerGameObject.GetComponent<GameManager>();
@@ -29,21 +29,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Transform[] checkPoints = new Transform[6];
+    public Transform[ ] checkPoints = new Transform[6];
+    public Transform[ ] powerUpPoints0 = new Transform[5];
+    public Transform[ ] powerUpPoints1 = new Transform[5];
+    public Transform[ ] powerUpPoints2 = new Transform[5];
+    public Transform[ ] powerUpPoints3 = new Transform[5];
+    public Transform[ ] powerUpPoints4 = new Transform[5];
+    public Transform[ ] powerUpPoints5 = new Transform[5];
+    public Transform[, ] powerUpPoints = new Transform[6, 5];
 
-    public Transform[] powerUpPoints0 = new Transform[5];
-    public Transform[] powerUpPoints1 = new Transform[5];
-    public Transform[] powerUpPoints2 = new Transform[5];
-    public Transform[] powerUpPoints3 = new Transform[5];
-    public Transform[] powerUpPoints4 = new Transform[5];
-    public Transform[] powerUpPoints5 = new Transform[5];
+    public int[, ] ranking = new int[3, 8];
+    public int[ ] numberOfPlayerThatCompletedLap = new int[3];
 
-    public Transform[ , ] powerUpPoints = new Transform[6,5];
+    public bool isGamePaused = false;
 
-    public int[,] ranking = new int[3,8];
-    public int[] numberOfPlayerThatCompletedLap = new int[3]; 
+    public GameObject pauseMenu;
+    public GameObject quitCheck;
+    public GameObject restartCheck;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null)
         {
             instance = this;
@@ -78,5 +83,73 @@ public class GameManager : MonoBehaviour
         {
             powerUpPoints[5, i] = powerUpPoints5[i];
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isGamePaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isGamePaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isGamePaused = false;
+    }
+
+    public void RestartCheck()
+    {
+        if (restartCheck.activeInHierarchy)
+        {
+            restartCheck.SetActive(false);
+        }
+        else
+        {
+            restartCheck.SetActive(true);
+        }
+    }
+
+    public void RestartRun()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitCheck()
+    {
+        if (quitCheck.activeInHierarchy)
+        {
+            quitCheck.SetActive(false);
+        }
+        else
+        {
+            quitCheck.SetActive(true);
+        }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

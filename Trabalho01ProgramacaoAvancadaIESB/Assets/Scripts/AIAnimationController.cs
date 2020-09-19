@@ -4,40 +4,60 @@ using UnityEngine;
 
 public class AIAnimationController : MonoBehaviour
 {
-    private Animator animatorAI;
-    private UnityEngine.AI.NavMeshAgent agent;
+    [SerializeField] private Animator runnerAnimator;
+    [SerializeField] private UnityEngine.AI.NavMeshAgent agent;
+    [SerializeField] private IRunner runner;
+    [SerializeField] private float minTimeToAFK  = 4f;
+    [SerializeField] private float maxTimeToAFK = 6f;
+    [SerializeField] private int numberOfAnimationsAFK = 2;
+    
     private float timeToAFK;
     private float timer;
     private int animationAFK;
     
     private void Awake() {
-        animatorAI = this.GetComponent<Animator>();
+        runnerAnimator = this.GetComponent<Animator>();
+        runner = this.GetComponent<IRunner>();
+        timeToAFK = Random.Range(minTimeToAFK, maxTimeToAFK);
         agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        timeToAFK = Random.Range(4f,6f);
     }
 
     void Update()
     {
-        animatorAI.SetFloat("Velocity", agent.velocity.magnitude);
+        if (runner.lapNumber > 2)
+        {
+            if (GameManager.Instance.ranking[2, 0] == runner.runnerID)
+            {
+                runnerAnimator.SetTrigger("Win");
+            }else
+            {
+                runnerAnimator.SetTrigger("Lose");
+            }
+        }
+        runnerAnimator.SetFloat("Velocity", agent.velocity.magnitude);
 
-        animatorAI.SetFloat("VelocityX", agent.velocity.x);
+        runnerAnimator.SetFloat("VelocityX", agent.velocity.x);
 
-        animatorAI.SetFloat("VelocityZ", agent.velocity.z);
+        runnerAnimator.SetFloat("VelocityZ", agent.velocity.z);
 
-        if(animatorAI.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if(runnerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             timer += Time.deltaTime;
 
             if (timer > timeToAFK)
             {
-                animationAFK = Random.Range(0,2);
+                animationAFK = Random.Range(0, numberOfAnimationsAFK);
                 if (animationAFK == 0)
                 {
-                    animatorAI.SetTrigger("AFK1");
+                    runnerAnimator.SetTrigger("AFK1");
+                    timeToAFK = Random.Range(minTimeToAFK, maxTimeToAFK);
+                    timer = 0;
                 }
                 else
                 {
-                    animatorAI.SetTrigger("AFK2");
+                    runnerAnimator.SetTrigger("AFK2");
+                    timeToAFK = Random.Range(minTimeToAFK, maxTimeToAFK);
+                    timer = 0;
                 }
             }
         }

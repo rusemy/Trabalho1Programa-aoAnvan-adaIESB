@@ -5,53 +5,57 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playerRigidbody;
-    private float inputVertical;
-    private float inputHorizontal;
+	private Rigidbody playerRigidbody;
+	private float inputVertical;
+	private float inputHorizontal;
 
-    private float maxVelocity = 10f;
+	private float maxVelocity = 10f;
 
-    public float movementForce = 100f;
-    public float rotationSpeed = 15f;
+	public float movementForce = 100f;
+	public float rotationSpeed = 15f;
 
-   private void Awake() {
-       playerRigidbody = this.GetComponent<Rigidbody>();
-       
-   }
+	private void Awake()
+	{
+		playerRigidbody = this.GetComponent<Rigidbody>();
 
-   private void Update() {
-       inputVertical = Input.GetAxis("Vertical");
-       inputHorizontal = Input.GetAxisRaw("Horizontal");
-       
-       if (Input.GetKeyDown(KeyCode.LeftShift))
-       {
-           maxVelocity /= 2f;
-       }
-       if (Input.GetKeyUp(KeyCode.LeftShift))
-       {
-           maxVelocity *= 2f;
-       }
+	}
 
-   }
+	private void Update()
+	{
+		inputVertical = Input.GetAxis("Vertical");
+		inputHorizontal = Input.GetAxis("Horizontal");
 
-   private void FixedUpdate() {
-       if (inputVertical > 0f)
-       {       
-           if (playerRigidbody.velocity.magnitude < maxVelocity)
-           {
-               playerRigidbody.AddForce(movementForce * transform.forward);
-           }
-       }
-       if (inputVertical < 0f)
-       {
-           if (playerRigidbody.velocity.magnitude < (maxVelocity/2f) )
-           {
-               playerRigidbody.AddForce(movementForce * -transform.forward);
-           }
-       }
+		if (Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			maxVelocity /= 2f;
+		}
+		if (Input.GetKeyUp(KeyCode.LeftShift))
+		{
+			maxVelocity *= 2f;
+		}
 
-       transform.Rotate(transform.up * inputHorizontal * rotationSpeed);
-   }
+	}
 
+	private void FixedUpdate()
+	{
+		if (inputVertical > 0f)
+		{
+			if (playerRigidbody.velocity.magnitude < maxVelocity)
+			{
+				playerRigidbody.AddForce(movementForce * transform.forward);
+			}
+		}
+		if (inputVertical < 0f)
+		{
+			if (playerRigidbody.velocity.magnitude < (maxVelocity / 2f))
+			{
+				playerRigidbody.AddForce(movementForce * -transform.forward);
+			}
+		}
+		if (playerRigidbody.velocity.magnitude > 0.1f)
+		{
+			transform.Rotate(transform.up * inputHorizontal * rotationSpeed);
+		}
+	}
 
 }
