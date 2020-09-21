@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
             }
             return instance;
         }
+
     }
 
     public Transform[ ] checkPoints = new Transform[6];
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public Transform[, ] powerUpPoints = new Transform[6, 5];
 
     public int[, ] ranking = new int[3, 8];
+    public int[ ] finishingRanking = new int[8];
     public int[ ] numberOfPlayerThatCompletedLap = new int[3];
 
     public bool isGamePaused = false;
@@ -46,6 +48,10 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject quitCheck;
     public GameObject restartCheck;
+    public GameObject startCountDown;
+
+    public float countdownTimeToStartRace = 5f;
+    public float timeToRestartRace = 10f;
 
     private void Awake()
     {
@@ -83,10 +89,21 @@ public class GameManager : MonoBehaviour
         {
             powerUpPoints[5, i] = powerUpPoints5[i];
         }
+
+        pauseMenu.SetActive(false);
+        quitCheck.SetActive(false);
+        restartCheck.SetActive(false);
     }
 
     private void Update()
     {
+        if (ranking[2, 0] != 0)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                finishingRanking[i] = ranking[2, i];
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isGamePaused)
@@ -126,7 +143,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RestartRun()
+    public void RestartRace()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -152,4 +169,18 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    IEnumerator StartGameCountdown()
+    {
+        Time.timeScale = 0f;
+        // var countdownTimer = Time.timeSinceLevelLoad + countdownTimeToStartRace;
+        // while (Time.timeSinceLevelLoad < countdownTimer)
+        // {
+        // 	yield return 0;
+        // }
+        yield return new WaitForSeconds(countdownTimeToStartRace);
+        Time.timeScale = 1f;
+        startCountDown.SetActive(false);
+    }
+
 }
