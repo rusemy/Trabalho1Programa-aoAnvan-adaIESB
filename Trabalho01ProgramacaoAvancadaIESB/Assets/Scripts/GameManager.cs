@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject quitCheck;
     public GameObject restartCheck;
-    public GameObject startCountDown;
+    //public GameObject startCountDown;
 
     public float countdownTimeToStartRace = 5f;
     public float timeToRestartRace = 10f;
@@ -170,17 +170,17 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    IEnumerator StartGameCountdown()
-    {
-        Time.timeScale = 0f;
-        // var countdownTimer = Time.timeSinceLevelLoad + countdownTimeToStartRace;
-        // while (Time.timeSinceLevelLoad < countdownTimer)
-        // {
-        // 	yield return 0;
-        // }
-        yield return new WaitForSeconds(countdownTimeToStartRace);
-        Time.timeScale = 1f;
-        startCountDown.SetActive(false);
-    }
+    // IEnumerator StartGameCountdown()
+    // {
+    //     Time.timeScale = 0f;
+    //     // var countdownTimer = Time.timeSinceLevelLoad + countdownTimeToStartRace;
+    //     // while (Time.timeSinceLevelLoad < countdownTimer)
+    //     // {
+    //     // 	yield return 0;
+    //     // }
+    //     yield return new WaitForSeconds(countdownTimeToStartRace);
+    //     Time.timeScale = 1f;
+    //     startCountDown.SetActive(false);
+    // }
 
 }

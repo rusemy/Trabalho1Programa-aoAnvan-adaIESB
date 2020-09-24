@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         //camera.LookAt(target);
 
@@ -58,8 +58,8 @@ public class CameraController : MonoBehaviour
         }
 
         //this.transform.position = target.position;
-        this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position, smoothMovingSpeed * Time.deltaTime);
+        this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position, smoothMovingSpeed * Time.fixedDeltaTime);
         //this.transform.rotation = target.rotation;
-        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, target.transform.rotation, smoothRotationSpeed * Time.deltaTime);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, target.transform.rotation, smoothRotationSpeed * Time.fixedDeltaTime);
     }
 }

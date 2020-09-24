@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class PlayerController : MonoBehaviour
+
+public class PlayerController : MonoBehaviour, IRunner
 {
-	private Rigidbody playerRigidbody;
-	private GameObject wrongDirectionWarning;
-	private GameObject FinalScreen;
-	private float inputVertical;
-	private float inputHorizontal;
-
-	private float maxVelocity = 10f;
-
-	public float movementForce = 100f;
-	public float rotationSpeed = 15f;
-
-	private NavMeshAgent agent;
+	[SerializeField] private Rigidbody playerRigidbody;
+	[SerializeField] private NavMeshAgent agent;
+	[SerializeField] private GameObject wrongDirectionWarning;
+	[SerializeField] private GameObject FinalScreen;
+	[SerializeField] private float maxVelocity = 10f;
+	[SerializeField] private float movementForce = 100f;
+	[SerializeField] private float rotationSpeed = 15f;
 	public int runnerID { get; set; } = 1;
-
 	public int lapNumber { get; set; } = 0;
 	public int nextCheckPoint { get; set; } = 0;
+
+	private float inputVertical;
+	private float inputHorizontal;
 	private float lastDistance;
 
 	private void Awake()
@@ -35,16 +33,17 @@ public class PlayerController : MonoBehaviour
 
 		Walk();
 
-		if (WrongDirection())
-		{
-			wrongDirectionWarning.SetActive(true);
-		}
+		// if (WrongDirection())
+		// {
+		// 	wrongDirectionWarning.SetActive(true);
+		// }
 
 	}
 
 	private void FixedUpdate()
 	{
 		Move();
+		Rotate();
 	}
 
 	public void CompleteLap()
@@ -106,6 +105,14 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyUp(KeyCode.LeftShift))
 		{
 			maxVelocity *= 2f;
+		}
+	}
+
+	private void Rotate()
+	{
+		if (playerRigidbody.velocity.magnitude > 0.1f)
+		{
+			transform.Rotate(transform.up * inputHorizontal * rotationSpeed);
 		}
 	}
 
