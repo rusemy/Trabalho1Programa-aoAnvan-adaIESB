@@ -26,28 +26,39 @@ public class PlayerController : MonoBehaviour, IRunner
 	private float lastDistance;
 	private float rotationSpeed;
 	private float acelerationForce;
+	private float speed = 0;
 
 	private void Awake()
 	{
 		runnerID = PlayerParameters.RunnerID;
 		playerRigidbody = this.GetComponent<Rigidbody>();
+		agent = this.GetComponent<NavMeshAgent>();
 		maxSpeed = PlayerParameters.MaxVelocity;
 		rotationSpeed = PlayerParameters.RotationSpeed;
 		acelerationForce = PlayerParameters.AcelerationForce;
-		GameManager.Instance.runners.Add(this);
+		GameManager.Instance.runners.Add(this.GetComponent<IRunner>());
 	}
 
 	private void Update()
 	{
 		inputVertical = Input.GetAxis("Vertical");
 		inputHorizontal = Input.GetAxis("Horizontal");
-
+		RecalculateSpeed();
 		Walk();
 
 		// if (WrongDirection())
 		// {
 		// 	wrongDirectionWarning.SetActive(true);
 		// }
+		// else
+		// {
+		// 	wrongDirectionWarning.SetActive(false);
+		// }
+
+		if (nextCheckPoint > 5)
+		{
+			CompleteLap();
+		}
 
 	}
 
@@ -57,6 +68,21 @@ public class PlayerController : MonoBehaviour, IRunner
 		{
 			Move();
 			Rotate();
+		}
+	}
+
+	public void RecalculateSpeed()
+	{
+		NavMeshHit hit;
+		if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
+		{
+			int areaIndex = hit.mask;
+			int index = 0;
+			while ((areaIndex >>= 1) > 0)
+			{
+				index++;
+			}
+			speed = (maxSpeed / NavMesh.GetAreaCost(index));
 		}
 	}
 
@@ -102,14 +128,14 @@ public class PlayerController : MonoBehaviour, IRunner
 	{
 		if (inputVertical > 0f)
 		{
-			if (playerRigidbody.velocity.magnitude < maxSpeed)
+			if (playerRigidbody.velocity.magnitude < speed)
 			{
 				playerRigidbody.AddForce(acelerationForce * transform.forward);
 			}
 		}
 		if (inputVertical < 0f)
 		{
-			if (playerRigidbody.velocity.magnitude < (maxSpeed / 2f))
+			if (playerRigidbody.velocity.magnitude < (speed / 2f))
 			{
 				playerRigidbody.AddForce(acelerationForce * -transform.forward);
 			}

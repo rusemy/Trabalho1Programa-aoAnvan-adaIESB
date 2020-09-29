@@ -12,7 +12,9 @@ public class CheckPoint : MonoBehaviour
         {
             if (runner.nextCheckPoint == checkPointID)
             {
+
                 runner.nextCheckPoint++;
+
                 if (other.GetComponent<PlayerController>() != null)
                 {
                     other.GetComponent<PlayerController>().PathToNextCheckpoint();

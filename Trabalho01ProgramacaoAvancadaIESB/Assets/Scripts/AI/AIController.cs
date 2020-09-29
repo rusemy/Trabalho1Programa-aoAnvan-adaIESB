@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour, IRunner
     public AIParameters AIParameters => aIParameters;
 
     [SerializeField] private NavMeshAgent agent;
+    public int setRunnerID = 2;
     public int runnerID { get; set; }
 
     public int lapNumber { get; set; } = 0;
@@ -22,7 +23,7 @@ public class AIController : MonoBehaviour, IRunner
 
     void Awake()
     {
-        runnerID = AIParameters.RunnerID;
+        runnerID = setRunnerID;
         agent = this.GetComponent<NavMeshAgent>();
         maxSpeed = AIParameters.MaxVelocity;
         GameManager.Instance.runners.Add(this);
@@ -35,12 +36,13 @@ public class AIController : MonoBehaviour, IRunner
             runnerID = 2;
         }
         agent.speed = maxSpeed;
+        StartRace();
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-
+        RecalculateSpeed();
         if (availablePowerUp != null)
         {
 
@@ -49,10 +51,24 @@ public class AIController : MonoBehaviour, IRunner
                 UsePowerUp();
             }
         }
-        agent.speed = maxSpeed;
         if (nextCheckPoint > 5)
         {
             CompleteLap();
+        }
+    }
+
+    public void RecalculateSpeed()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
+        {
+            int areaIndex = hit.mask;
+            int index = 0;
+            while ((areaIndex >>= 1) > 0)
+            {
+                index++;
+            }
+            agent.speed = (maxSpeed / NavMesh.GetAreaCost(index));
         }
     }
 
@@ -84,6 +100,15 @@ public class AIController : MonoBehaviour, IRunner
         }
         lastDistance = distance;
         return false;
+    }
+
+    public void StartRace()
+    {
+        int randomPointIndex = Random.Range(0, 5);
+        Debug.Log(GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].name, GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].gameObject);
+        NavMeshHit hit;
+        NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
+        agent.SetDestination(hit.position);
     }
 
 }

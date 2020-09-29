@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class MoveState : StateMachineBehaviour 
+public class MoveState : StateMachineBehaviour
 {
 
     private NavMeshAgent agent;
@@ -16,18 +16,22 @@ public class MoveState : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(FindNextDestination());
+        if (agent.remainingDistance < (agent.stoppingDistance + 0.1f))
+        {
+            agent.SetDestination(FindNextDestination());
+        }
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
-    }
 
-    private Vector3 FindNextDestination(){
-        int randomPointIndex = Random.Range(0,6);
+    }
+    private Vector3 FindNextDestination()
+    {
+        int randomPointIndex = Random.Range(0, 5);
         NavMeshHit hit;
-        NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[runner.nextCheckPoint, randomPointIndex].position, out hit, 1f, NavMesh.AllAreas);
+
+        NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[runner.nextCheckPoint, randomPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
         return hit.position;
     }
 }

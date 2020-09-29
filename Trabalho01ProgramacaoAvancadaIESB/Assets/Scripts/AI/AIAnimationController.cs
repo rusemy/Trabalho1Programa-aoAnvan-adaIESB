@@ -15,6 +15,7 @@ public class AIAnimationController : MonoBehaviour
     private float timeToAFK;
     private float timer;
     private int animationAFK;
+    private bool finish = false;
 
     private void Awake()
     {
@@ -26,22 +27,24 @@ public class AIAnimationController : MonoBehaviour
 
     void Update()
     {
-        if (runner.lapNumber > 2)
+        if (runner.lapNumber > 2 && !finish)
         {
             if (GameManager.Instance.ranking[2, 0] == runner.runnerID)
             {
                 runnerAnimator.SetTrigger("Win");
+                finish = true;
             }
             else
             {
                 runnerAnimator.SetTrigger("Lose");
+                finish = true;
             }
         }
         runnerAnimator.SetFloat("Velocity", agent.velocity.magnitude);
 
-        runnerAnimator.SetFloat("VelocityX", agent.velocity.x);
+        runnerAnimator.SetFloat("VelocityX", Vector3.Project(agent.velocity, transform.right).magnitude);
 
-        runnerAnimator.SetFloat("VelocityZ", agent.velocity.z);
+        runnerAnimator.SetFloat("VelocityZ", Vector3.Project(agent.velocity, transform.forward).magnitude);
 
         if (runnerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {

@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public int[ ] finishingRanking = new int[8];
     public int[ ] numberOfPlayerThatCompletedLap = new int[3];
 
-    public List<IRunner> runners;
+    public List<IRunner> runners = new List<IRunner>();
 
     public bool isGamePaused = false;
 
@@ -62,8 +62,9 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        else
+        else if (instance == this)
         {
+            Debug.Log("destuiiu");
             Destroy(this.gameObject);
         }
 

@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f8111cd4536647449b704bad23a9a26, type: 3}
   m_Name: 
@@ -41,6 +41,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1109 &-7310648626659180085
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -844289268906374918}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
 --- !u!114 &-5242133964387312309
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48,7 +62,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f8111cd4536647449b704bad23a9a26, type: 3}
   m_Name: 
@@ -354,65 +368,73 @@ BlendTree:
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 7f122eeedd3bbcb43a3e06b4fc43d15e, type: 2}
-    m_Threshold: 0.125
-    m_Position: {x: 0, y: 9.9}
+    m_Motion: {fileID: 7400000, guid: a4ffa6a173b800248b72000f0f80148c, type: 2}
+    m_Threshold: 0.11111111
+    m_Position: {x: 0, y: 6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 153969b7ae5dad843b174cf2ece16e1f, type: 2}
-    m_Threshold: 0.25
-    m_Position: {x: -5, y: 9.9}
+    m_Threshold: 0.22222222
+    m_Position: {x: -1, y: 6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 23f125945fce2b249ad2e32a645def5a, type: 2}
-    m_Threshold: 0.375
-    m_Position: {x: 5, y: 9.9}
+    m_Threshold: 0.33333334
+    m_Position: {x: 1, y: 6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 928aa348c73ce894a9dfed3a646fe5ef, type: 2}
-    m_Threshold: 0.5
-    m_Position: {x: 0, y: -9.9}
+    m_Threshold: 0.44444445
+    m_Position: {x: 0, y: -6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 4c212ce53b615114ebcf90cc42209c40, type: 2}
-    m_Threshold: 0.625
-    m_Position: {x: -5, y: -9.9}
+    m_Threshold: 0.5555556
+    m_Position: {x: -1, y: -6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 9a9b90621f205ec4c90a8d4177318e2e, type: 2}
-    m_Threshold: 0.75
-    m_Position: {x: 5, y: -9.9}
+    m_Threshold: 0.6666667
+    m_Position: {x: 1, y: -6.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 548d8535730ef2443a675c5eb35f979a, type: 2}
-    m_Threshold: 0.875
-    m_Position: {x: 0, y: 4.9}
+    m_Threshold: 0.7777778
+    m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: c2e7329b61f1df5499ed27d750048c9b, type: 2}
+    m_Threshold: 0.8888889
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 7f122eeedd3bbcb43a3e06b4fc43d15e, type: 2}
     m_Threshold: 1
-    m_Position: {x: 0, y: -4.9}
+    m_Position: {x: 0, y: 13.9}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
@@ -482,7 +504,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f8111cd4536647449b704bad23a9a26, type: 3}
   m_Name: 
@@ -613,7 +635,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1591deb7a8ad6c4580345a8067a893f, type: 3}
   m_Name: 
@@ -655,14 +677,15 @@ AnimatorStateMachine:
   m_AnyStateTransitions:
   - {fileID: -2242068262717797458}
   - {fileID: 8562277616447586356}
-  m_EntryTransitions: []
+  m_EntryTransitions:
+  - {fileID: -7310648626659180085}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 200, y: -50, z: 0}
-  m_EntryPosition: {x: -170, y: 200, z: 0}
+  m_EntryPosition: {x: -180, y: 280, z: 0}
   m_ExitPosition: {x: 730, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 9223001835772410405}
+  m_DefaultState: {fileID: -844289268906374918}
 --- !u!1102 &7176038309095189841
 AnimatorState:
   serializedVersion: 5
