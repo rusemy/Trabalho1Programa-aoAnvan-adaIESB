@@ -7,6 +7,7 @@ public interface IRunner
     int runnerID { get; set; }
     int lapNumber { get; set; }
     int nextCheckPoint { get; set; }
+    int onGroundID { get; set; }
     bool isStunned { get; set; }
     float maxSpeed { get; set; }
     PowerUp availablePowerUp { get; set; }

@@ -14,6 +14,7 @@ public class AIController : MonoBehaviour, IRunner
 
     public int lapNumber { get; set; } = 0;
     public int nextCheckPoint { get; set; } = 0;
+    public int onGroundID { get; set; }
     public PowerUp availablePowerUp { get; set; }
     public bool isStunned { get; set; } = false;
     public float maxSpeed { get; set; }

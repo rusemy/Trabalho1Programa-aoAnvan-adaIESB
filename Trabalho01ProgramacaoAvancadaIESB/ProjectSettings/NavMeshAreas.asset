@@ -11,14 +11,14 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: Mud
-    cost: 4
+  - name: BadTrip
+    cost: 0.9
   - name: Grass
-    cost: 2
+    cost: 1.5
   - name: Ice
-    cost: 0.25
-  - name: 
-    cost: 1
+    cost: 0.45
+  - name: Mud
+    cost: 3
   - name: 
     cost: 1
   - name: 

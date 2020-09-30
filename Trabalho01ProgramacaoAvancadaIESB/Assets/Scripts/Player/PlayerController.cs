@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IRunner
 	public int runnerID { get; set; } = 1;
 	public int lapNumber { get; set; } = 0;
 	public int nextCheckPoint { get; set; } = 0;
+	public int onGroundID { get; set; } = 0;
 	public bool isStunned { get; set; } = false;
 	public float maxSpeed { get; set; }
 	public PowerUp availablePowerUp { get; set; }
@@ -41,8 +42,22 @@ public class PlayerController : MonoBehaviour, IRunner
 
 	private void Update()
 	{
-		inputVertical = Input.GetAxis("Vertical");
-		inputHorizontal = Input.GetAxis("Horizontal");
+		if (onGroundID == 0)
+		{
+			inputVertical = Input.GetAxis("Vertical");
+			inputHorizontal = Input.GetAxis("Horizontal");
+		}
+		else if (onGroundID == 1)
+		{
+			inputVertical = -Input.GetAxis("Vertical");
+			inputHorizontal = -Input.GetAxis("Horizontal");
+		}
+		else if (onGroundID == 2)
+		{
+			inputVertical = Input.GetAxis("Vertical");
+			inputHorizontal = Input.GetAxis("Horizontal") / 2f;
+		}
+
 		RecalculateSpeed();
 		Walk();
 
