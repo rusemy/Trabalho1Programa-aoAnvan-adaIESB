@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderPowerUp : PowerUp
 {
-    public float stunDuration;
+    [SerializeField] private float stunDuration;
     public override IEnumerator Effect(IRunner runner, Transform parent)
     {
         var particleSystem = Instantiate(effectParticle, parent);
