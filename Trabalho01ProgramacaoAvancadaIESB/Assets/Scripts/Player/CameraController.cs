@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float maxZoomIn;
     [SerializeField] private float maxZoomOut;
     [SerializeField] private float zoomSpeed;
-    private Camera camera;
+    private Camera mainCamera;
     private Transform cameraTrasform;
     private float defaultZoom;
 
@@ -20,12 +20,12 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         cameraTrasform = this.GetComponentInChildren<Camera>().transform;
-        camera = this.GetComponentInChildren<Camera>();
+        mainCamera = this.GetComponentInChildren<Camera>();
     }
 
     private void Start()
     {
-        defaultZoom = camera.fieldOfView;
+        defaultZoom = mainCamera.fieldOfView;
     }
 
     // Update is called once per frame
@@ -33,28 +33,28 @@ public class CameraController : MonoBehaviour
     {
         //camera.LookAt(target);
 
-        if ((Input.mouseScrollDelta.y > 0) && (camera.fieldOfView > maxZoomIn))
+        if ((Input.mouseScrollDelta.y > 0) && (mainCamera.fieldOfView > maxZoomIn))
         {
-            camera.fieldOfView -= zoomSpeed;
+            mainCamera.fieldOfView -= zoomSpeed;
         }
 
-        if ((Input.mouseScrollDelta.y < 0) && (camera.fieldOfView < maxZoomOut))
+        if ((Input.mouseScrollDelta.y < 0) && (mainCamera.fieldOfView < maxZoomOut))
         {
-            camera.fieldOfView += zoomSpeed;
+            mainCamera.fieldOfView += zoomSpeed;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            lastMousePosition = camera.ScreenToViewportPoint(Input.mousePosition);
+            lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(0))
         {
-            Vector3 direction = lastMousePosition - camera.ScreenToViewportPoint(Input.mousePosition);
+            Vector3 direction = lastMousePosition - mainCamera.ScreenToViewportPoint(Input.mousePosition);
 
             cameraRotation *= Quaternion.Euler(Vector3.up * direction.x);
 
-            lastMousePosition = camera.ScreenToViewportPoint(Input.mousePosition);
+            lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
         }
 
         //this.transform.position = target.position;

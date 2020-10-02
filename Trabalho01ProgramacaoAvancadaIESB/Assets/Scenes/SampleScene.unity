@@ -544,7 +544,7 @@ GameObject:
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 3
+  m_NavMeshLayer: 6
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &41575721
@@ -9555,7 +9555,7 @@ GameObject:
   m_Name: Cube (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 3
+  m_NavMeshLayer: 6
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1915408369
@@ -10124,6 +10124,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5914704104133656609, guid: f89a615d652a7e34ebc5808bc72c9a9b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914704104133656609, guid: f89a615d652a7e34ebc5808bc72c9a9b,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914704104133656609, guid: f89a615d652a7e34ebc5808bc72c9a9b,
+        type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8205523505372590913, guid: f89a615d652a7e34ebc5808bc72c9a9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10132,7 +10147,7 @@ PrefabInstance:
     - target: {fileID: 8205523505372590913, guid: f89a615d652a7e34ebc5808bc72c9a9b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.52
+      value: 3.693
       objectReference: {fileID: 0}
     - target: {fileID: 8205523505372590913, guid: f89a615d652a7e34ebc5808bc72c9a9b,
         type: 3}

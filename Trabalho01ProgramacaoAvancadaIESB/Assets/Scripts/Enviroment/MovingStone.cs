@@ -4,61 +4,53 @@ using UnityEngine;
 
 public class MovingStone : MonoBehaviour
 {
-    private Rigidbody stoneRigidbody;
-    private Transform topPoint;
-    private Transform bottomPoint;
-    private float speed = 2f;
-    private float timeOnTop = 3f;
-    private float timeOnBottom = 3f;
-    private bool startOnTop;
+    [SerializeField] private Transform[ ] pointsToMove;
+    [SerializeField] private float stopTime = 3f;
+    [SerializeField] private float speed = 2f;
 
-    private bool isOnTop;
-    private bool isOnBottom;
     private float timer = 0;
+    private float stopTimer = 0;
     private float traveledDistance = 0;
+    private int actualPointIndex;
+    private int nextPointIndex;
 
     private void Awake()
     {
-        stoneRigidbody = this.GetComponent<Rigidbody>();
-        isOnTop = startOnTop;
-        isOnBottom = !startOnTop;
+        traveledDistance = Vector3.Distance(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position);
     }
 
     private void Update()
     {
-        if (isOnTop || isOnBottom)
+        stopTimer += Time.deltaTime;
+        if (traveledDistance > 1)
         {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            isOnBottom = (Vector3.Distance(this.transform.position, bottomPoint.position) < 0.1f);
-            isOnTop = (Vector3.Distance(this.transform.position, topPoint.position) < 0.1f);
+            NextPoint();
         }
 
-        if (isOnBottom)
+        if (stopTimer > stopTime)
         {
-            stoneRigidbody.useGravity = false;
-        }
-
-        if (isOnTop && timer > timeOnTop)
-        {
-            isOnTop = false;
-            timer = 0;
-            stoneRigidbody.useGravity = true;
-        }
-
-        if (isOnBottom && timer > timeOnBottom)
-        {
-            isOnBottom = false;
-            timer = 0;
-            moveToTop();
+            Move();
         }
 
     }
 
-    private void moveToTop()
+    private void Move()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, topPoint.position, (timer * speed / traveledDistance));
+        timer += Time.deltaTime;
+
+        this.transform.position = Vector3.Lerp(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position, (timer * speed / traveledDistance));
+    }
+
+    private void NextPoint()
+    {
+        timer = 0;
+        stopTime = 0;
+        actualPointIndex = nextPointIndex;
+        nextPointIndex++;
+        if (nextPointIndex >= pointsToMove.Length)
+        {
+            nextPointIndex = 0;
+        }
+        traveledDistance = Vector3.Distance(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position);
     }
 }
