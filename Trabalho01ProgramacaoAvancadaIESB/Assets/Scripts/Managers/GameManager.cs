@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
                 instance = FindObjectOfType<GameManager>();
                 if (instance == null)
                 {
-                    GameObject managerGameObject = new GameObject("InputManager", typeof(GameManager));
+                    GameObject managerGameObject = new GameObject("GameManager", typeof(GameManager));
                     instance = managerGameObject.GetComponent<GameManager>();
                     DontDestroyOnLoad(managerGameObject);
                 }
@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         quitCheck.SetActive(false);
         restartCheck.SetActive(false);
+
     }
 
     private void Update()

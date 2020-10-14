@@ -106,7 +106,6 @@ public class AIController : MonoBehaviour, IRunner
     public void StartRace()
     {
         int randomPointIndex = Random.Range(0, 5);
-        Debug.Log(GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].name, GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].gameObject);
         NavMeshHit hit;
         NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
         agent.SetDestination(hit.position);

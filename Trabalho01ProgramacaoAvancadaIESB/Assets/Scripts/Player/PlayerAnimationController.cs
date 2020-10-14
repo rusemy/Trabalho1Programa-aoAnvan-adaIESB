@@ -36,8 +36,8 @@ public class PlayerAnimationController : MonoBehaviour
                 runnerAnimator.SetTrigger("Lose");
             }
         }
+
         runnerAnimator.SetFloat("Velocity", playerRigidbody.velocity.magnitude);
-        //Debug.Log(playerRigidbody.velocity.magnitude);
 
         runnerAnimator.SetFloat("VelocityX", Input.GetAxis("Horizontal"));
 

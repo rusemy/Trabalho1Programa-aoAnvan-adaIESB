@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float smoothMovingSpeed;
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private float smoothRotationSpeed;
     [SerializeField] private float maxZoomIn;
     [SerializeField] private float maxZoomOut;
@@ -31,8 +32,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //camera.LookAt(target);
-
         if ((Input.mouseScrollDelta.y > 0) && (mainCamera.fieldOfView > maxZoomIn))
         {
             mainCamera.fieldOfView -= zoomSpeed;
@@ -43,23 +42,33 @@ public class CameraController : MonoBehaviour
             mainCamera.fieldOfView += zoomSpeed;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
-        }
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
+        // }
 
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 direction = lastMousePosition - mainCamera.ScreenToViewportPoint(Input.mousePosition);
+        // if (Input.GetMouseButton(0))
+        // {
+        //     Vector3 direction = lastMousePosition - mainCamera.ScreenToViewportPoint(Input.mousePosition);
 
-            cameraRotation *= Quaternion.Euler(Vector3.up * direction.x);
+        //     cameraRotation *= Quaternion.Euler(Vector3.up * direction.x);
 
-            lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
-        }
+        //     lastMousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
+        // }
 
         //this.transform.position = target.position;
         this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position, smoothMovingSpeed * Time.fixedDeltaTime);
         //this.transform.rotation = target.rotation;
         this.transform.rotation = Quaternion.Lerp(this.transform.rotation, target.transform.rotation, smoothRotationSpeed * Time.fixedDeltaTime);
+    }
+
+    private void Update()
+    {
+        if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.1f)
+        {
+            cameraRotation = Quaternion.Euler(Vector3.up * rotationSpeed);
+
+        }
+        this.transform.rotation = cameraRotation * target.transform.rotation;
     }
 }

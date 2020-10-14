@@ -8,9 +8,7 @@ public class PlayerController : MonoBehaviour, IRunner
 {
 	[SerializeField] private PlayerParameters playerParameters;
 	public PlayerParameters PlayerParameters => playerParameters;
-
 	[SerializeField] private Rigidbody playerRigidbody;
-	[SerializeField] private NavMeshAgent agent;
 	[SerializeField] private GameObject wrongDirectionWarning;
 	[SerializeField] private GameObject FinalScreen;
 
@@ -22,22 +20,29 @@ public class PlayerController : MonoBehaviour, IRunner
 	public float maxSpeed { get; set; }
 	public PowerUp availablePowerUp { get; set; }
 
+	private float lastDistance;
 	private float inputVertical;
 	private float inputHorizontal;
-	private float lastDistance;
 	private float rotationSpeed;
 	private float acelerationForce;
 	private float speed = 0;
+	NavMeshPath playerPath;
 
 	private void Awake()
 	{
 		runnerID = PlayerParameters.RunnerID;
 		playerRigidbody = this.GetComponent<Rigidbody>();
-		agent = this.GetComponent<NavMeshAgent>();
+		playerPath = new NavMeshPath();
 		maxSpeed = PlayerParameters.MaxVelocity;
 		rotationSpeed = PlayerParameters.RotationSpeed;
 		acelerationForce = PlayerParameters.AcelerationForce;
 		GameManager.Instance.runners.Add(this.GetComponent<IRunner>());
+	}
+	private void Start()
+	{
+		PathToNextCheckpoint();
+		wrongDirectionWarning.SetActive(false);
+		lastDistance = Direction();
 	}
 
 	private void Update()
@@ -61,14 +66,16 @@ public class PlayerController : MonoBehaviour, IRunner
 		RecalculateSpeed();
 		Walk();
 
-		// if (WrongDirection())
-		// {
-		// 	wrongDirectionWarning.SetActive(true);
-		// }
-		// else
-		// {
-		// 	wrongDirectionWarning.SetActive(false);
-		// }
+		if (Direction() > lastDistance)
+		{
+			lastDistance = Direction();
+			wrongDirectionWarning.SetActive(true);
+		}
+		else if (Direction() < lastDistance)
+		{
+			lastDistance = Direction();
+			wrongDirectionWarning.SetActive(false);
+		}
 
 		if (nextCheckPoint > 5)
 		{
@@ -120,9 +127,18 @@ public class PlayerController : MonoBehaviour, IRunner
 		}
 	}
 
+	public float Direction()
+	{
+		PathToNextCheckpoint();
+		var distance = Vector3.Distance(playerPath.corners[0], playerPath.corners[(playerPath.corners.Length - 1)]);
+		return distance;
+	}
+
 	public bool WrongDirection()
 	{
-		var distance = agent.remainingDistance;
+		PathToNextCheckpoint();
+		var distance = Vector3.Distance(playerPath.corners[0], playerPath.corners[(playerPath.corners.Length - 1)]);
+		Debug.Log(distance);
 		if (distance > lastDistance)
 		{
 			lastDistance = distance;
@@ -135,8 +151,17 @@ public class PlayerController : MonoBehaviour, IRunner
 	public void PathToNextCheckpoint()
 	{
 		NavMeshHit hit;
-		NavMesh.SamplePosition(GameManager.Instance.checkPoints[nextCheckPoint].position, out hit, 1f, NavMesh.AllAreas);
-		agent.CalculatePath(hit.position, agent.path);
+
+		if (nextCheckPoint < 6)
+		{
+			NavMesh.SamplePosition(GameManager.Instance.checkPoints[nextCheckPoint].position, out hit, 1f, NavMesh.AllAreas);
+		}
+		else
+		{
+			NavMesh.SamplePosition(GameManager.Instance.checkPoints[0].position, out hit, 1f, NavMesh.AllAreas);
+		}
+		NavMesh.CalculatePath(this.transform.position, hit.position, NavMesh.AllAreas, playerPath);
+
 	}
 
 	private void Move()
