@@ -64,7 +64,7 @@ public class HUDController : MonoBehaviour
 	}
 	private void LapTextUpdate()
 	{
-		LapText.text = (player.lapNumber + 1).ToString() + " / 3";
+		LapText.text = "Lap : " + (player.lapNumber + 1).ToString() + " / 3";
 	}
 
 }

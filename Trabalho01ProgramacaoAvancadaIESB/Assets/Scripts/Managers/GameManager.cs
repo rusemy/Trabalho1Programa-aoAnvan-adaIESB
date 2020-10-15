@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 -contegem regressiva e aviso de inicio
 -pause(continuar,reiniciar e sair)
 */
+public delegate void StartRaceCallback();
 public class GameManager : MonoBehaviour
 {
 
@@ -50,9 +51,11 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject quitCheck;
     public GameObject restartCheck;
-    //public GameObject startCountDown;
+    public GameObject startCountDown;
 
     public float countdownTimeToStartRace = 5f;
+
+    public static StartRaceCallback OnStartRace;
     public float timeToRestartRace = 10f;
 
     private void Awake()
@@ -96,7 +99,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         quitCheck.SetActive(false);
         restartCheck.SetActive(false);
-
+        StartCoroutine(StartGameCountdown());
     }
 
     private void Update()
@@ -174,17 +177,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    // IEnumerator StartGameCountdown()
-    // {
-    //     Time.timeScale = 0f;
-    //     // var countdownTimer = Time.timeSinceLevelLoad + countdownTimeToStartRace;
-    //     // while (Time.timeSinceLevelLoad < countdownTimer)
-    //     // {
-    //     // 	yield return 0;
-    //     // }
-    //     yield return new WaitForSeconds(countdownTimeToStartRace);
-    //     Time.timeScale = 1f;
-    //     startCountDown.SetActive(false);
-    // }
+    IEnumerator StartGameCountdown()
+    {
+        startCountDown.SetActive(true);
+        yield return new WaitForSeconds(countdownTimeToStartRace);
+        startCountDown.SetActive(false);
+        OnStartRace?.Invoke();
+    }
 
 }

@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IRunner
 	private float rotationSpeed;
 	private float acelerationForce;
 	private float speed = 0;
+	private bool RaceHasStarted = false;
 	NavMeshPath playerPath;
 
 	private void Awake()
@@ -43,6 +44,17 @@ public class PlayerController : MonoBehaviour, IRunner
 		PathToNextCheckpoint();
 		wrongDirectionWarning.SetActive(false);
 		lastDistance = Direction();
+	}
+
+	private void OnEnable()
+	{
+		RaceHasStarted = false;
+		GameManager.OnStartRace += StartRace;
+	}
+
+	private void OnDisable()
+	{
+		GameManager.OnStartRace -= StartRace;
 	}
 
 	private void Update()
@@ -93,18 +105,30 @@ public class PlayerController : MonoBehaviour, IRunner
 		}
 	}
 
+	private void StartRace()
+	{
+		RaceHasStarted = true;
+	}
+
 	public void RecalculateSpeed()
 	{
-		NavMeshHit hit;
-		if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
+		if (RaceHasStarted)
 		{
-			int areaIndex = hit.mask;
-			int index = 0;
-			while ((areaIndex >>= 1) > 0)
+			NavMeshHit hit;
+			if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
 			{
-				index++;
+				int areaIndex = hit.mask;
+				int index = 0;
+				while ((areaIndex >>= 1) > 0)
+				{
+					index++;
+				}
+				speed = (maxSpeed / NavMesh.GetAreaCost(index));
 			}
-			speed = (maxSpeed / NavMesh.GetAreaCost(index));
+		}
+		else
+		{
+			speed = 0;
 		}
 	}
 

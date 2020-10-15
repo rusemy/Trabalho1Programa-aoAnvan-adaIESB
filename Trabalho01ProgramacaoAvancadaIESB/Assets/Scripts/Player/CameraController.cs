@@ -59,16 +59,17 @@ public class CameraController : MonoBehaviour
         //this.transform.position = target.position;
         this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position, smoothMovingSpeed * Time.fixedDeltaTime);
         //this.transform.rotation = target.rotation;
-        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, target.transform.rotation, smoothRotationSpeed * Time.fixedDeltaTime);
+        //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, target.transform.rotation, smoothRotationSpeed * Time.fixedDeltaTime);
     }
 
     private void Update()
     {
         if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.1f)
         {
-            cameraRotation = Quaternion.Euler(Vector3.up * rotationSpeed);
-
+            cameraRotation = Quaternion.Euler(Vector3.up * rotationSpeed * Input.GetAxis("Mouse X"));
         }
+        cameraRotation = Quaternion.Euler(Vector3.up * 10);
+        Debug.Log(cameraRotation);
         this.transform.rotation = cameraRotation * target.transform.rotation;
     }
 }

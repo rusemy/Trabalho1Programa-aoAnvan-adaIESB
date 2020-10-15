@@ -21,6 +21,7 @@ public class AIController : MonoBehaviour, IRunner
     public float timeToUsePowerUp;
     private float lastDistance;
     private float timer;
+    private bool RaceHasStarted = false;
 
     void Awake()
     {
@@ -37,7 +38,17 @@ public class AIController : MonoBehaviour, IRunner
             runnerID = 2;
         }
         agent.speed = maxSpeed;
-        StartRace();
+    }
+
+    private void OnEnable()
+    {
+        RaceHasStarted = false;
+        GameManager.OnStartRace += StartRace;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnStartRace -= StartRace;
     }
 
     void Update()
@@ -60,16 +71,23 @@ public class AIController : MonoBehaviour, IRunner
 
     public void RecalculateSpeed()
     {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
+        if (RaceHasStarted)
         {
-            int areaIndex = hit.mask;
-            int index = 0;
-            while ((areaIndex >>= 1) > 0)
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
             {
-                index++;
+                int areaIndex = hit.mask;
+                int index = 0;
+                while ((areaIndex >>= 1) > 0)
+                {
+                    index++;
+                }
+                agent.speed = (maxSpeed / NavMesh.GetAreaCost(index));
             }
-            agent.speed = (maxSpeed / NavMesh.GetAreaCost(index));
+        }
+        else
+        {
+            agent.speed = 0;
         }
     }
 
@@ -105,6 +123,7 @@ public class AIController : MonoBehaviour, IRunner
 
     public void StartRace()
     {
+        RaceHasStarted = true;
         int randomPointIndex = Random.Range(0, 5);
         NavMeshHit hit;
         NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[nextCheckPoint, randomPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
