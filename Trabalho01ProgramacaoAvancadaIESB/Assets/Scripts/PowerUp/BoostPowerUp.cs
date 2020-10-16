@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Boost", menuName = "PowerUps/Boost")]
+
 public class BoostPowerUp : PowerUp
 {
     [SerializeField] private float boostDuration;

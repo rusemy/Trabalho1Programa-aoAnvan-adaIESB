@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Thunder", menuName = "PowerUps/Thunder")]
+
 public class ThunderPowerUp : PowerUp
 {
     [SerializeField] private float stunDuration;

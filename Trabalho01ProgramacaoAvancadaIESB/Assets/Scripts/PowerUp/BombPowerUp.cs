@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Bomb", menuName = "PowerUps/Bomb")]
+
 public class BombPowerUp : PowerUp
 {
     [SerializeField] private float timeToPlaceBomb;

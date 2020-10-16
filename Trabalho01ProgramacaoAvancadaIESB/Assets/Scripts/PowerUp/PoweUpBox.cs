@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PoweUpBox : MonoBehaviour
 {
-    private ParticleSystem onEnableParticle;
-    private ParticleSystem onDisableParticle;
-    private ParticleSystem readyToPickParticle;
-    private GameObject box;
-    private float timeToRespawn;
-    private PowerUp[ ] powerUps;
+    [SerializeField] private ParticleSystem onEnableParticle;
+    [SerializeField] private ParticleSystem onDisableParticle;
+    [SerializeField] private ParticleSystem readyToPickParticle;
+    [SerializeField] private GameObject box;
+    [SerializeField] private float timeToRespawn;
+    [SerializeField] private PowerUp[ ] powerUps;
     private PowerUp powerUpToPick;
 
     private void OnEnable()
