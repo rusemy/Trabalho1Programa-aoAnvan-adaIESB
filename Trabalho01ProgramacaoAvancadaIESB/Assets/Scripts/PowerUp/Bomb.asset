@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ebe5372855bb04c822e0be13864289, type: 3}
   m_Name: Bomb
   m_EditorClassIdentifier: 
-  name: No Power Up
-  duration: 0
-  icon: {fileID: 0}
-  effectParticle: {fileID: 0}
-  timeToPlaceBomb: 0
-  distanceToPlaceBomb: 0
-  bombPrefab: {fileID: 0}
+  name: Bomb
+  duration: 15
+  icon: {fileID: 21300000, guid: 27a18c209adc5244eac953dbc542ac77, type: 3}
+  effectParticle: {fileID: 7572161516301855035, guid: 8508aa18cbe4e7a4bab8fe8f7bfe93a6,
+    type: 3}
+  timeToPlaceBomb: 0.5
+  distanceToPlaceBomb: 0.5
+  bombPrefab: {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}

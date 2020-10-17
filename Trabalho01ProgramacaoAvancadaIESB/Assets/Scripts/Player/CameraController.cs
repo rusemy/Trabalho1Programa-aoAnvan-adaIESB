@@ -69,7 +69,6 @@ public class CameraController : MonoBehaviour
             cameraRotation = Quaternion.Euler(Vector3.up * rotationSpeed * Input.GetAxis("Mouse X"));
         }
         cameraRotation = Quaternion.Euler(Vector3.up * 10);
-        Debug.Log(cameraRotation);
         this.transform.rotation = cameraRotation * target.transform.rotation;
     }
 }

@@ -19,12 +19,12 @@ NavMeshProjectSettings:
     cost: 0.45
   - name: Mud
     cost: 3
-  - name: 
+  - name: Shortcut
     cost: 1
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
+  - name: Shortcut Mush
+    cost: 1.1
+  - name: Shortcut Ice
+    cost: 0.45
   - name: 
     cost: 1
   - name: 

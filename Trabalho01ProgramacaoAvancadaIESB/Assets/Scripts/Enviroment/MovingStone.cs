@@ -4,53 +4,44 @@ using UnityEngine;
 
 public class MovingStone : MonoBehaviour
 {
-    [SerializeField] private Transform[ ] pointsToMove;
+    [SerializeField] private Rigidbody stoneRigidbody;
+    [SerializeField] private Vector3[ ] pointsToMove;
     [SerializeField] private float stopTime = 3f;
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float speed = 0.5f;
 
     private float timer = 0;
     private float stopTimer = 0;
-    private float traveledDistance = 0;
-    private int actualPointIndex;
-    private int nextPointIndex;
+    private int actualPointIndex = 0;
+    private int nextPointIndex = 1;
 
     private void Awake()
     {
-        traveledDistance = Vector3.Distance(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position);
+        stoneRigidbody = this.GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        stopTimer += Time.deltaTime;
-        if (traveledDistance > 1)
+        if (Vector3.Distance(this.transform.position, pointsToMove[nextPointIndex]) < 0.1f)
         {
-            NextPoint();
+            StartCoroutine(NextPoint());
         }
-
-        if (stopTimer > stopTime)
+        else
         {
-            Move();
+            Debug.Log("actual:" + pointsToMove[actualPointIndex]);
+            Debug.Log("next:" + pointsToMove[nextPointIndex]);
+            Vector3.Lerp(pointsToMove[actualPointIndex], pointsToMove[nextPointIndex], speed);
         }
 
     }
 
-    private void Move()
+    private IEnumerator NextPoint()
     {
-        timer += Time.deltaTime;
-
-        this.transform.position = Vector3.Lerp(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position, (timer * speed / traveledDistance));
-    }
-
-    private void NextPoint()
-    {
-        timer = 0;
-        stopTime = 0;
+        yield return new WaitForSeconds(stopTime);
         actualPointIndex = nextPointIndex;
         nextPointIndex++;
         if (nextPointIndex >= pointsToMove.Length)
         {
             nextPointIndex = 0;
         }
-        traveledDistance = Vector3.Distance(pointsToMove[actualPointIndex].position, pointsToMove[nextPointIndex].position);
     }
 }

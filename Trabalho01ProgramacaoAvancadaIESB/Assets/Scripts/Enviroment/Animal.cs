@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Animal : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private List<Transform> pointsToMove;
+    [SerializeField] private List<Vector3> pointsToMove;
     [SerializeField] private float velocity;
     [SerializeField] private float minTimeToStop;
     [SerializeField] private float maxTimeToStop;
@@ -43,13 +43,13 @@ public class Animal : MonoBehaviour
         timer = 0f;
 
         actualPointIndex++;
-        if (actualPointIndex > pointsToMove.Count)
+        if (actualPointIndex >= pointsToMove.Count)
         {
             actualPointIndex = 0;
         }
 
         NavMeshHit hit;
-        NavMesh.SamplePosition(pointsToMove[actualPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
+        NavMesh.SamplePosition(pointsToMove[actualPointIndex], out hit, 2f, NavMesh.AllAreas);
 
         agent.SetDestination(hit.position);
     }

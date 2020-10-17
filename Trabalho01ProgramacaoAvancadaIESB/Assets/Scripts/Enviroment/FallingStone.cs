@@ -5,8 +5,8 @@ using UnityEngine;
 public class FallingStone : MonoBehaviour
 {
     [SerializeField] private Rigidbody stoneRigidbody;
-    [SerializeField] private Transform topPoint;
-    [SerializeField] private Transform bottomPoint;
+    [SerializeField] private Vector3 topPoint;
+    [SerializeField] private Vector3 bottomPoint;
     [SerializeField] private float speed = 2f;
     [SerializeField] private float timeOnTop = 3f;
     [SerializeField] private float timeOnBottom = 3f;
@@ -14,6 +14,7 @@ public class FallingStone : MonoBehaviour
 
     private bool isOnTop;
     private bool isOnBottom;
+    private bool isMoving;
     private float timer = 0;
     private float traveledDistance = 0;
 
@@ -22,19 +23,22 @@ public class FallingStone : MonoBehaviour
         stoneRigidbody = this.GetComponent<Rigidbody>();
         isOnTop = startOnTop;
         isOnBottom = !startOnTop;
-        traveledDistance = Vector3.Distance(topPoint.position, bottomPoint.position);
+        traveledDistance = Vector3.Distance(topPoint, bottomPoint);
     }
 
     private void Update()
     {
+        isOnBottom = (Vector3.Distance(this.transform.position, bottomPoint) < 0.1f);
+        isOnTop = (Vector3.Distance(this.transform.position, topPoint) < 0.1f);
+
         if (isOnTop || isOnBottom)
         {
             timer += Time.deltaTime;
         }
         else
         {
-            isOnBottom = (Vector3.Distance(this.transform.position, bottomPoint.position) < 0.1f);
-            isOnTop = (Vector3.Distance(this.transform.position, topPoint.position) < 0.1f);
+            isOnBottom = (Vector3.Distance(this.transform.position, bottomPoint) < 0.1f);
+            isOnTop = (Vector3.Distance(this.transform.position, topPoint) < 0.1f);
         }
 
         if (isOnBottom)
@@ -53,13 +57,22 @@ public class FallingStone : MonoBehaviour
         {
             isOnBottom = false;
             timer = 0;
-            MoveToTop();
+            stoneRigidbody.AddForce(Vector3.up * speed);
         }
 
     }
 
     private void MoveToTop()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, topPoint.position, (timer * speed / traveledDistance));
+        //this.transform.position = Vector3.Lerp(this.transform.position, topPoint, (timer * speed / traveledDistance));
+        if (Vector3.Distance(this.transform.position, topPoint) < 0.5f)
+        {
+            stoneRigidbody.velocity = (Vector3.up * speed);
+        }
+        else
+        {
+            this.transform.position = topPoint;
+            stoneRigidbody.velocity = Vector3.zero;
+        }
     }
 }

@@ -27,15 +27,21 @@ public class PoweUpBox : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        var runner = other.GetComponent<IRunner>();
-        if (runner.availablePowerUp == null)
+        if (box.activeInHierarchy)
         {
-            runner.availablePowerUp = powerUpToPick;
-            if (other.GetComponent<AIController>() != null)
+            var runner = other.GetComponent<IRunner>();
+            if (runner != null)
             {
-                other.GetComponent<AIController>().timeToUsePowerUp = Random.Range(0.1f, (powerUpToPick.duration * 0.8f));
+                if (runner.availablePowerUp == null)
+                {
+                    runner.availablePowerUp = powerUpToPick;
+                    if (other.GetComponent<AIController>() != null)
+                    {
+                        other.GetComponent<AIController>().timeToUsePowerUp = Random.Range(0.1f, (powerUpToPick.duration * 0.8f));
+                    }
+                    StartCoroutine(DespawnAndRespawnBox());
+                }
             }
-            StartCoroutine(DespawnAndRespawnBox());
         }
     }
 

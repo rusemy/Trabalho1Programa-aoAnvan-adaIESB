@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour, IRunner
 
 	private void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Space) && (availablePowerUp != null))
+		{
+			UsePowerUp();
+		}
 		if (onGroundID == 0)
 		{
 			inputVertical = Input.GetAxis("Vertical");

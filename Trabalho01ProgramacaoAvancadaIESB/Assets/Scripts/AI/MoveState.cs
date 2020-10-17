@@ -61,7 +61,7 @@ public class MoveState : StateMachineBehaviour
         int randomPointIndex = Random.Range(0, 5);
         NavMeshHit hit;
 
-        NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[runner.nextCheckPoint, randomPointIndex].position, out hit, 1.5f, NavMesh.AllAreas);
+        NavMesh.SamplePosition(GameManager.Instance.powerUpPoints[runner.nextCheckPoint, randomPointIndex].position, out hit, 2f, NavMesh.AllAreas);
         return hit.position;
     }
 }

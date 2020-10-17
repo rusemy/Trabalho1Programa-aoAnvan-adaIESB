@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b7a657ca5dad744b4fe02cadae4b80, type: 3}
   m_Name: Boost
   m_EditorClassIdentifier: 
-  name: No Power Up
-  duration: 0
-  icon: {fileID: 0}
-  effectParticle: {fileID: 0}
-  boostDuration: 0
-  boostAmount: 0
+  name: Boost
+  duration: 15
+  icon: {fileID: 21300000, guid: 71083923a718fbd44947bb3d31d2a1f0, type: 3}
+  effectParticle: {fileID: 8306140963122504801, guid: a3411887c72b2204abadb6aa62d912da,
+    type: 3}
+  boostDuration: 3
+  boostAmount: 1.3

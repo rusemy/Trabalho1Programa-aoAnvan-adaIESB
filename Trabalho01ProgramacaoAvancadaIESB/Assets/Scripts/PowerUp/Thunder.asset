@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5096ebc10e8b5314b8b5221dbd74d355, type: 3}
   m_Name: Thunder
   m_EditorClassIdentifier: 
-  name: No Power Up
-  duration: 0
-  icon: {fileID: 0}
-  effectParticle: {fileID: 0}
-  stunDuration: 0
+  name: Thunder
+  duration: 15
+  icon: {fileID: 21300000, guid: 525901cd0a61c734aa5b1275f64c6134, type: 3}
+  effectParticle: {fileID: 2633005203865551530, guid: 442e478603e2dac4cbee168918ba9807,
+    type: 3}
+  stunDuration: 2

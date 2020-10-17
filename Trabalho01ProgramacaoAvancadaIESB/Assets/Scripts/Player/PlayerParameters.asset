@@ -15,4 +15,4 @@ MonoBehaviour:
   runnerID: 1
   maxVelocity: 7
   acelerationForce: 20
-  rotationSpeed: 1
+  rotationSpeed: 5

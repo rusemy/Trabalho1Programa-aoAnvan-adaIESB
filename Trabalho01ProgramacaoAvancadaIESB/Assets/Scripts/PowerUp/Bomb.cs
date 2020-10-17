@@ -27,6 +27,8 @@ public class Bomb : MonoBehaviour
                     }
                 }
             }
+
+            Destroy(this.gameObject);
         }
     }
 }
