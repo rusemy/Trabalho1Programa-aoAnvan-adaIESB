@@ -17,9 +17,13 @@ public class MoveState : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (!agent.hasPath)
+        {
+            agent.SetDestination(FindNextDestination());
+        }
         if (runner.onGroundID == 0)
         {
-            if (agent.remainingDistance < (agent.stoppingDistance + 0.1f))
+            if (agent.remainingDistance < (agent.stoppingDistance + 0.5f))
             {
                 agent.SetDestination(FindNextDestination());
             }

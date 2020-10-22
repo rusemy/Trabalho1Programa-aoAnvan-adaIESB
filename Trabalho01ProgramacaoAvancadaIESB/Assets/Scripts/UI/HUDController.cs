@@ -27,12 +27,13 @@ public class HUDController : MonoBehaviour
 		if (player.availablePowerUp == null)
 		{
 			itemImage.sprite = emptyItemSprite;
-			itemTimer.color = new Color(40, 50, 50, 50);
+			itemImage.color = new Color(0.16f, 0.2f, 0.2f, 0.2f);
+			itemTimer.fillAmount = 0f;
 		}
 		else
 		{
 			itemImage.sprite = player.availablePowerUp.icon;
-			itemTimer.color = new Color(250, 250, 200, 50);
+			itemImage.color = Color.white;
 			if (timer < 0.1f)
 			{
 				timer = player.availablePowerUp.duration;
@@ -45,19 +46,16 @@ public class HUDController : MonoBehaviour
 	private void PositionTextUpdate()
 	{
 		int atualPosition = 1;
-		for (int i = 2; i >= 0; i--)
+
+		for (int j = 0; j < 8; j++)
 		{
-			for (int j = 0; j < 8; j++)
+			if (GameManager.Instance.ranking[player.lapNumber, j] > 1)
 			{
-				if (GameManager.Instance.ranking[i, j] > 1)
-				{
-					atualPosition++;
-				}
-				else if (GameManager.Instance.ranking[i, j] == 1)
-				{
-					i = 0;
-					j = 8;
-				}
+				atualPosition++;
+			}
+			else if (GameManager.Instance.ranking[player.lapNumber, j] == 1)
+			{
+				j = 8;
 			}
 		}
 		positionText.text = atualPosition.ToString() + " º";

@@ -7,7 +7,9 @@ using UnityEngine;
 public class FinishingPositionUI : MonoBehaviour
 {
     private TextMeshProUGUI finishingPositionText;
+    private TextMeshProUGUI timeToRestartText;
     public int finishingPosition;
+    private float timeToRestart;
 
     private void OnEnable()
     {
@@ -44,11 +46,18 @@ public class FinishingPositionUI : MonoBehaviour
         }
         finishingPositionText.text += " Lugar";
 
+        timeToRestart = GameManager.Instance.timeToRestartRace;
     }
 
-    IEnumerator RestartRaceAfterXTime()
+    private void Update()
     {
-        yield return new WaitForSeconds(GameManager.Instance.timeToRestartRace);
-        GameManager.Instance.RestartRace();
+        timeToRestart -= Time.deltaTime;
+
+        timeToRestartText.text = "Restarting Race in : " + Mathf.RoundToInt(timeToRestart).ToString() + " . . .";
+
+        if (timeToRestart <= 0)
+        {
+            GameManager.Instance.RestartRace();
+        }
     }
 }

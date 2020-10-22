@@ -182,11 +182,11 @@ public class PlayerController : MonoBehaviour, IRunner
 
 		if (nextCheckPoint < 6)
 		{
-			NavMesh.SamplePosition(GameManager.Instance.checkPoints[nextCheckPoint].position, out hit, 2f, NavMesh.AllAreas);
+			NavMesh.SamplePosition(GameManager.Instance.checkPoints[nextCheckPoint].position, out hit, 20f, NavMesh.AllAreas);
 		}
 		else
 		{
-			NavMesh.SamplePosition(GameManager.Instance.checkPoints[0].position, out hit, 2f, NavMesh.AllAreas);
+			NavMesh.SamplePosition(GameManager.Instance.checkPoints[0].position, out hit, 20f, NavMesh.AllAreas);
 		}
 		NavMesh.CalculatePath(this.transform.position, hit.position, NavMesh.AllAreas, playerPath);
 

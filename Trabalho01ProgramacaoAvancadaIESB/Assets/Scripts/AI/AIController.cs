@@ -53,14 +53,15 @@ public class AIController : MonoBehaviour, IRunner
 
     void Update()
     {
-        timer += Time.deltaTime;
         RecalculateSpeed();
         if (availablePowerUp != null)
         {
+            timer += Time.deltaTime;
 
             if (timer > timeToUsePowerUp)
             {
                 UsePowerUp();
+                timer = 0;
             }
         }
         if (nextCheckPoint > 5)

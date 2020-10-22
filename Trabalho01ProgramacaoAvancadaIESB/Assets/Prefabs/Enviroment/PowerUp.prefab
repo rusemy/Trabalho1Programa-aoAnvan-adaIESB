@@ -163,7 +163,7 @@ MonoBehaviour:
   onDisableParticle: {fileID: 2573424839948068629}
   readyToPickParticle: {fileID: 2399075993633268432}
   box: {fileID: 9073411165746655293}
-  timeToRespawn: 0
+  timeToRespawn: 5
   powerUps:
   - {fileID: 11400000, guid: 49654b6dc653e0d4d8c677982c755002, type: 2}
   - {fileID: 11400000, guid: 77c1c6c18e369744d81704ab72123296, type: 2}
