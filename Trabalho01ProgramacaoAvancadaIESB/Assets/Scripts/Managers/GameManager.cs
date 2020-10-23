@@ -96,6 +96,9 @@ public class GameManager : MonoBehaviour
             powerUpPoints[5, i] = powerUpPoints5[i];
         }
 
+    }
+    private void OnEnable()
+    {
         pauseMenu.SetActive(false);
         quitCheck.SetActive(false);
         restartCheck.SetActive(false);
@@ -152,6 +155,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartRace()
     {
+        FadeManager.Instance.FadeOut();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -169,16 +173,19 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        FadeManager.Instance.FadeOut();
         Application.Quit();
     }
 
     public void GoToMainMenu()
     {
+        FadeManager.Instance.FadeOut();
         SceneManager.LoadScene("MainMenu");
     }
 
     IEnumerator StartGameCountdown()
     {
+        FadeManager.Instance.FadeIn();
         startCountDown.SetActive(true);
         yield return new WaitForSeconds(countdownTimeToStartRace);
         startCountDown.SetActive(false);

@@ -39,9 +39,14 @@ public class MenuManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void OnEnable()
+    {
+        FadeManager.Instance.FadeIn();
+    }
 
     public void StartGame()
     {
+        FadeManager.Instance.FadeOut();
         SceneManager.LoadScene("Race");
     }
 
@@ -59,6 +64,7 @@ public class MenuManager : MonoBehaviour
 
     public void QuitGame()
     {
+        FadeManager.Instance.FadeOut();
         Application.Quit();
     }
 }
